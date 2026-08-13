@@ -1,7 +1,7 @@
 export default function DJXLogo() {
   return (
     <img
-      src="/logo.jpg"
+      src="/logo.png"
       alt="DJX Music Logo - Red vinyl record with DJ TIN AUNG OO crest"
       style={{
         width: '100%',
