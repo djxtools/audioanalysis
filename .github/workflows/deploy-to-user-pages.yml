@@ -26,7 +26,19 @@ jobs:
 
       - name: Build
         run: npm run build
-name: Debug: show build output and test auth run: | echo "WORKDIR: $(pwd)" echo "Listing repo root:" ls -la echo "Listing public (if any):" ls -la public || true echo "Listing dist (build output):" ls -la dist || true echo "Testing access to target repo:" GIT_ASKPASS=/bin/echo git ls-remote https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/djxtools/djxtools.github.io || true
+
+      - name: Debug: show build output and test auth
+        run: |
+          echo "WORKDIR: $(pwd)"
+          echo "Listing repo root:"
+          ls -la
+          echo "Listing public (if any):"
+          ls -la public || true
+          echo "Listing dist (build output):"
+          ls -la dist || true
+          echo "Testing access to target repo:"
+          GIT_ASKPASS=/bin/echo git ls-remote https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/djxtools/djxtools.github.io || true
+
       - name: Deploy to djxtools.github.io
         uses: peaceiris/actions-gh-pages@v4
         with:
