@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install dependencies
         run: npm ci
@@ -26,12 +26,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Debug: show build output (optional)
+        run: |
+          echo "Listing dist:"
+          ls -la ./dist || true
+
       - name: Deploy to djxtools.github.io
         uses: peaceiris/actions-gh-pages@v4
         with:
-          publishing_dir: ./dist
-          destination_repo: djxtools/djxtools.github.io
-          github_token: ${{ secrets.DEPLOY_TOKEN }}
+          publish_dir: ./dist
+          external_repository: djxtools/djxtools.github.io
+          publish_branch: main
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
           keep_files: false
