@@ -1,21 +1,38 @@
-  - name: Setup Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: '24'
+name: Deploy to user pages
 
-  - name: Install dependencies
-    run: npm ci
+on:
+  push:
+    branches:
+      - main
 
-  - name: Build
-    run: npm run build
+permissions:
+  contents: write
 
-  - name: Deploy to djxtools.github.io
-    uses: peaceiris/actions-gh-pages@v4
-    with:
-      publish_dir: ./dist
-      external_repository: djxtools/djxtools.github.io
-      publish_branch: main
-      personal_token: ${{ secrets.DEPLOY_TOKEN }}
-      user_name: github-actions[bot]
-      user_email: 41898282+github-actions[bot]@users.noreply.github.com
-      keep_files: false
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to djxtools.github.io
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: ./dist
+          external_repository: djxtools/djxtools.github.io
+          publish_branch: main
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          keep_files: false
